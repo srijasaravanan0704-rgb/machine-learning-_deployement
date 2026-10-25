@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishShift | AI Risk Scanner</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="container">
+        <header class="header">
+            <div class="logo">🛡️ PhishShift</div>
+            <span class="badge">AI SECURITY SCANNER</span>
+        </header>
+
+        <section class="hero">
+            <p class="eyebrow">SMART MESSAGE PROTECTION</p>
+            <h1>Detect threats.<br><span>Stay protected.</span></h1>
+            <p class="subtitle">
+                Scan suspicious emails and messages to identify potential phishing risks.
+            </p>
+        </section>
+
+        <section class="panel">
+            <label for="message">Message Scanner</label>
+            <p class="helper">Paste the email or message you want to check below.</p>
+
+            <textarea id="message" rows="7"
+                placeholder="Example: Your account is blocked! Click this link immediately to verify your password..."></textarea>
+
+            <div class="actions">
+                <button id="scanButton" class="primary-btn" type="button">
+                    🔍 Scan Message
+                </button>
+                <button id="clearButton" class="secondary-btn" type="button">
+                    Clear
+                </button>
+            </div>
+
+            <div class="samples">
+                <span>Try an example:</span>
+                <button id="sampleSafe" type="button">Safe message</button>
+                <button id="sampleSuspicious" type="button">Suspicious message</button>
+            </div>
+        </section>
+
+        <section id="result" class="panel result-panel" hidden aria-live="polite">
+            <h2>Scan Results</h2>
+            <p id="status"></p>
+            <p>Risk score: <strong id="risk"></strong></p>
+            <h3>Warning signals</h3>
+            <ul id="signals"></ul>
+            <p id="recommendation"></p>
+            <div class="actions">
+                <button id="copyButton" class="secondary-btn" type="button">Copy Report</button>
+                <button id="downloadButton" class="secondary-btn" type="button">Download Report</button>
+            </div>
+        </section>
+
+        <footer>
+            <p>PhishShift · Machine Learning Based Phishing Detection</p>
+            <p class="disclaimer">This tool provides an automated prediction, not a guarantee. Never share passwords or OTPs.</p>
+        </footer>
+    </main>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
