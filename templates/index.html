@@ -2,288 +2,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#071426">
-    <meta name="description" content="PhishShift AI-powered message risk scanner for phishing awareness and security.">
-
-    <title>PhishShift | AI Message Security</title>
-
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080e1b">
+  <meta name="description" content="PhishShift helps you analyze suspicious emails, SMS and messages for phishing risks.">
+  <title>PhishShift — Message Security</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='script.js') }}" defer></script>
 </head>
 
 <body>
-    <div class="app-shell">
+<div class="app-shell">
 
-        <header class="header">
-            <a class="logo" href="/" aria-label="PhishShift home">
-                <span class="logo-icon" aria-hidden="true">⬡</span>
-                <span>PhishShift</span>
-                <span class="logo-ai">AI</span>
-            </a>
+  <header class="topbar">
+    <a href="/" class="brand">
+      <span class="brand-mark">P</span>
+      <span>PhishShift<small>MESSAGE SECURITY</small></span>
+    </a>
+    <div class="top-status"><span class="live-dot"></span> Scanner ready</div>
+  </header>
 
-            <div class="header-right">
-                <span class="system-status">
-                    <span class="status-dot"></span>
-                    Security Scanner
-                </span>
-            </div>
-        </header>
+  <main class="main-content">
 
-        <main class="container">
+    <section class="hero">
+      <div class="eyebrow"><span>✦</span> YOUR FIRST LINE OF DEFENSE</div>
+      <h1>Pause. Check.<br><span>Stay protected.</span></h1>
+      <p>Not sure about a message? Check it before you click.
+        Analyze emails, SMS and chat messages for potential phishing risks.</p>
+      <div class="trust-points">
+        <span>✓ Machine learning analysis</span>
+        <span>✓ Instant results</span>
+        <span>✓ Simple risk insights</span>
+      </div>
+    </section>
 
-            <section class="hero">
-                <div class="eyebrow">
-                    <span aria-hidden="true">✦</span>
-                    SMART MESSAGE PROTECTION
-                </div>
+    <section class="dashboard">
 
-                <h1>
-                    Think before<br>
-                    <span>you click.</span>
-                </h1>
+      <div class="panel scanner">
+        <div class="panel-title">
+          <div class="title-icon">⌕</div>
+          <div>
+            <h2>Message scanner</h2>
+            <p>Paste the message you want to check.</p>
+          </div>
+          <span class="tag">ML POWERED</span>
+        </div>
 
-                <p class="subtitle">
-                    Analyze suspicious messages with your machine learning
-                    phishing detector. Understand the warning signs before
-                    you trust a message.
-                </p>
+        <label for="message">Message content</label>
+        <textarea id="message" maxlength="20000" rows="8"
+          placeholder="Paste your email, SMS or chat message here...&#10;&#10;Example: Your account will be blocked. Verify your details now."
+          spellcheck="false"></textarea>
 
-                <div class="hero-features">
-                    <span>✓ ML-powered analysis</span>
-                    <span>✓ Risk insights</span>
-                    <span>✓ Simple, fast scanning</span>
-                </div>
-            </section>
+        <div class="input-footer">
+          <span id="charCount">0 / 20,000 characters</span>
+          <button id="clearButton" class="link-button" type="button">Clear text</button>
+        </div>
 
-            <section class="scanner-layout">
+        <div class="privacy-note">
+          <span>ⓘ</span> Never paste passwords, OTPs or confidential information.
+        </div>
 
-                <div class="panel scanner-panel">
-                    <div class="panel-heading">
-                        <div class="heading-icon" aria-hidden="true">⌕</div>
-                        <div>
-                            <h2>Message Scanner</h2>
-                            <p>Analyze an email, SMS or chat message.</p>
-                        </div>
-                    </div>
+        <button id="scanButton" class="primary-button" type="button">
+          <span>⌕</span> <span id="scanButtonText">Analyze message</span>
+          <span class="button-arrow">→</span>
+        </button>
 
-                    <label for="message">Your message</label>
+        <p id="errorMessage" class="error-message" role="alert" hidden></p>
 
-                    <textarea
-                        id="message"
-                        rows="8"
-                        maxlength="20000"
-                        placeholder="Paste your message here...&#10;&#10;Example: Your account will be suspended. Verify your details immediately."
-                        spellcheck="false"
-                        aria-describedby="privacyNote charCount"
-                    ></textarea>
+        <div class="samples">
+          <p class="samples-label">TRY A SAMPLE MESSAGE</p>
+          <div class="sample-grid">
+            <button id="sampleSafe" class="sample-btn safe-sample" type="button">
+              <span>✓</span> Safe example
+            </button>
+            <button id="sampleSuspicious" class="sample-btn suspicious-sample" type="button">
+              <span>!</span> Suspicious example
+            </button>
+            <button id="samplePhishing" class="sample-btn phishing-sample" type="button">
+              <span>↗</span> Phishing example
+            </button>
+          </div>
+        </div>
+      </div>
 
-                    <div class="input-meta">
-                        <span id="privacyNote">
-                            Never enter passwords, OTPs or private information.
-                        </span>
-                        <span id="charCount" aria-live="polite">0 / 20000</span>
-                    </div>
+      <aside class="side-column">
+        <div class="panel mini-card">
+          <div class="mini-icon purple">✳</div>
+          <h3>Smart detection</h3>
+          <p>Your trained Logistic Regression model analyzes the message using TF-IDF features.</p>
+          <span class="mini-label">YOUR EXISTING ML MODEL</span>
+        </div>
 
-                    <div class="actions">
-                        <button
-                            id="scanButton"
-                            class="primary-btn"
-                            type="button"
-                        >
-                            <span aria-hidden="true">⌕</span>
-                            Scan Message
-                        </button>
+        <div class="panel mini-card">
+          <div class="mini-icon cyan">⌁</div>
+          <h3>Know the warning signs</h3>
+          <p>Look out for urgent requests, suspicious links and attempts to obtain personal information.</p>
+        </div>
 
-                        <button
-                            id="clearButton"
-                            class="secondary-btn"
-                            type="button"
-                        >
-                            Clear
-                        </button>
-                    </div>
+        <div class="safety-card">
+          <span>🛡</span>
+          <div>
+            <strong>Stay one step ahead</strong>
+            <p>Never trust a message just because it looks official. Verify requests through a known, official channel.</p>
+          </div>
+        </div>
+      </aside>
+    </section>
 
-                    <div class="samples">
-                        <p>Try a sample message</p>
+    <section id="result" class="panel results" hidden aria-live="polite">
+      <div class="result-header">
+        <div>
+          <div class="eyebrow">SCAN SUMMARY</div>
+          <h2>Your analysis</h2>
+        </div>
+        <span id="resultBadge" class="verdict-badge">Analysis complete</span>
+      </div>
 
-                        <div class="sample-buttons">
-                            <button id="sampleSafe" type="button">
-                                <span aria-hidden="true">●</span>
-                                Safe
-                            </button>
+      <div class="result-grid">
+        <div class="result-card">
+          <p class="card-label">Estimated phishing risk</p>
+          <div class="score-line">
+            <strong id="risk">—</strong><span>/ 100</span>
+          </div>
+          <div class="risk-track"><div id="riskBar" class="risk-fill"></div></div>
+          <p id="riskDescription" class="muted">Based on the model prediction.</p>
+        </div>
 
-                            <button id="sampleSuspicious" type="button">
-                                <span aria-hidden="true">●</span>
-                                Suspicious
-                            </button>
+        <div class="result-card verdict-card">
+          <p class="card-label">Model verdict</p>
+          <h3 id="status">Awaiting analysis</h3>
+          <p id="recommendation" class="muted">Your result will appear here.</p>
+        </div>
+      </div>
 
-                            <button id="samplePhishing" type="button">
-                                <span aria-hidden="true">●</span>
-                                Phishing
-                            </button>
-                        </div>
-                    </div>
+      <div class="signals">
+        <h3>Message warning signs</h3>
+        <p class="muted">Heuristic indicators found in the message. These are clues, not proof.</p>
+        <ul id="signals"></ul>
+        <p id="noSignals" class="muted" hidden>No common warning patterns were detected. This does not guarantee safety.</p>
+      </div>
 
-                    <p id="errorMessage" class="error-message"
-                       role="alert" hidden></p>
-                </div>
+      <div class="report-actions">
+        <button id="copyButton" class="secondary-button" type="button">▣ Copy report</button>
+        <button id="downloadButton" class="secondary-button" type="button">↓ Download report</button>
+      </div>
+      <p class="disclaimer">The risk score is an estimate derived from the model's prediction confidence, not a guarantee of message safety.</p>
+    </section>
 
-                <aside class="side-panel">
-                    <div class="panel insight-card">
-                        <div class="side-icon" aria-hidden="true">◈</div>
-                        <h3>AI Analysis</h3>
-                        <p>
-                            Your existing Logistic Regression model and
-                            TF-IDF vectorizer analyze the message.
-                        </p>
-                    </div>
+    <section class="panel history-panel">
+      <div class="history-heading">
+        <div class="panel-title">
+          <div class="title-icon history-icon">↻</div>
+          <div><h2>Recent scans</h2><p>Your scan history on this browser.</p></div>
+        </div>
+        <button id="clearHistoryButton" class="link-button" type="button">Clear history</button>
+      </div>
+      <div id="historyList" class="history-list">
+        <p id="emptyHistory" class="empty-history">Your completed scans will appear here.</p>
+      </div>
+      <p class="history-privacy">History is stored locally in your browser. Avoid scanning confidential messages on shared devices.</p>
+    </section>
 
-                    <div class="panel insight-card">
-                        <div class="side-icon" aria-hidden="true">⌁</div>
-                        <h3>Risk Insights</h3>
-                        <p>
-                            Review suspicious phrases, urgent requests
-                            and potentially dangerous links.
-                        </p>
-                    </div>
+  </main>
 
-                    <div class="safety-note">
-                        <span aria-hidden="true">ⓘ</span>
-                        <p>
-                            A safe prediction does not guarantee that a
-                            message is legitimate. Verify unexpected
-                            requests through official channels.
-                        </p>
-                    </div>
-                </aside>
-
-            </section>
-
-            <section
-                id="result"
-                class="panel result-panel"
-                hidden
-                aria-live="polite"
-                aria-atomic="true"
-            >
-                <div class="result-heading">
-                    <div>
-                        <p class="eyebrow">ANALYSIS COMPLETE</p>
-                        <h2>Scan Results</h2>
-                    </div>
-                    <span id="resultBadge" class="result-badge">
-                        Analysis
-                    </span>
-                </div>
-
-                <div class="result-summary">
-                    <div class="risk-card">
-                        <span class="result-label">Risk score</span>
-                        <div class="risk-value">
-                            <strong id="risk">—</strong>
-                            <span>/ 100</span>
-                        </div>
-
-                        <div class="risk-track"
-                             role="presentation">
-                            <div id="riskBar" class="risk-fill"></div>
-                        </div>
-                        <p id="riskDescription">
-                            Based on the available analysis.
-                        </p>
-                    </div>
-
-                    <div class="verdict-card">
-                        <span class="result-label">Detection verdict</span>
-                        <h3 id="status">Awaiting result</h3>
-                        <p id="recommendation">
-                            Scan a message to see its risk assessment.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="signals-section">
-                    <h3>Warning signals</h3>
-                    <p class="section-description">
-                        Review the indicators identified during analysis.
-                    </p>
-                    <ul id="signals"></ul>
-                    <p id="noSignals" hidden>
-                        No additional warning signals were reported.
-                    </p>
-                </div>
-
-                <div class="actions result-actions">
-                    <button
-                        id="copyButton"
-                        class="secondary-btn"
-                        type="button"
-                    >
-                        Copy Report
-                    </button>
-
-                    <button
-                        id="downloadButton"
-                        class="secondary-btn"
-                        type="button"
-                    >
-                        Download Report
-                    </button>
-                </div>
-            </section>
-
-            <section class="panel history-panel">
-                <div class="panel-heading">
-                    <div class="heading-icon" aria-hidden="true">↻</div>
-                    <div>
-                        <h2>Recent Scans</h2>
-                        <p>Review results saved in this browser.</p>
-                    </div>
-                    <button
-                        id="clearHistoryButton"
-                        class="text-btn"
-                        type="button"
-                    >
-                        Clear history
-                    </button>
-                </div>
-
-                <div id="historyList" class="history-list">
-                    <p id="emptyHistory" class="empty-history">
-                        No recent scans yet. Your scan history will
-                        appear here when available.
-                    </p>
-                </div>
-
-                <p class="history-privacy">
-                    History is intended for local browser storage.
-                    Avoid scanning confidential messages.
-                </p>
-            </section>
-
-        </main>
-
-        <footer class="footer">
-            <div class="footer-brand">
-                <span aria-hidden="true">⬡</span>
-                PhishShift
-            </div>
-
-            <p>
-                Machine Learning Based Phishing Detection
-            </p>
-
-            <p class="disclaimer">
-                Automated predictions are not guarantees.
-                Always verify suspicious messages independently.
-            </p>
-        </footer>
-
-    </div>
-
-    <script src="{{ url_for('static', filename='script.js') }}"
-            defer></script>
+  <footer class="footer">
+    <a href="/" class="footer-brand"><span class="brand-mark">P</span> PhishShift</a>
+    <p>Machine Learning Based Phishing Detection</p>
+    <p class="footer-note">Built for safer digital communication · Automated predictions can be wrong.</p>
+  </footer>
+</div>
 </body>
 </html>
